@@ -1,27 +1,32 @@
-# MyBatisGenerator Maven 插件 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
-## 1.设置`mysql-connector-java` Jar 包路径
+<generatorConfiguration>
+    <classPathEntry
+            location="K:\maven\maven3.5\repository\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar"/>
 
-```xml
-<classPathEntry  location="K:\maven\maven3.5\repository\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar"/>
-```
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!--去除注释  -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
 
-## 2. 设置数据库连接信息
-
-```xml
-<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        <!--数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/mybatisgeneratordemo"
                         userId="root"
                         password="root">
-</jdbcConnection>
-```
+        </jdbcConnection>
+        <!--默认false
+           Java type resolver will always use java.math.BigDecimal if the database column is of type DECIMAL or NUMERIC.
+         -->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
 
-
-
-## 3.设置 `实体`,`mapper`,`.xml`生成路径
-
-```xml
-<!--生成实体类 指定包名 以及生成的地址 （可以自定义地址，但是路径不存在不会自动创建  使用Maven生成在target目录下，会自动创建） -->
+        <!--生成实体类 指定包名 以及生成的地址 （可以自定义地址，但是路径不存在不会自动创建  使用Maven生成在target目录下，会自动创建） -->
         <javaModelGenerator targetPackage="com.xing.model" targetProject="src\main\java">
             <property name="enableSubPackages" value="false" />
             <property name="trimStrings" value="false" />
@@ -35,15 +40,9 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.xing.mapper" targetProject="src\main\java">
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
-```
 
-
-
-## 4.指定 `table`
-
-```xml
-<!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等-->
-<table tableName="role" domainObjectName="Role"
+        <!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等-->
+        <table tableName="role" domainObjectName="Role"
                enableCountByExample="false"
                enableInsert="true"
                enableUpdateByExample="false"
@@ -55,6 +54,6 @@
                enableSelectByExample="false"
                selectByExampleQueryId="true">
             <property name="useActualColumnNames" value="true"/>
-</table>
-```
-
+        </table>
+    </context>
+</generatorConfiguration>
